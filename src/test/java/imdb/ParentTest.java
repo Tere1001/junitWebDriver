@@ -1,5 +1,7 @@
 package imdb;
 
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -20,6 +22,10 @@ public class ParentTest {
 	public static final int SHORT_WAIT = 5;
 	public static final int MEDIUM_WAIT = 10;
 	public static final int LONG_WAIT = 15;
+	private String email ="tzmedel";
+	private String lomain="@gmail.com";
+	private String randomEmail;
+	
 
 	
 	@Before
@@ -36,7 +42,15 @@ public class ParentTest {
 		
 	}
 	protected void validateMovieExists(String movieName) {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(movieName)));
+	//	wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(movieName)));
+		List<WebElement> listaPeliculas = driver.findElements(By.cssSelector("td.result_text"));
+		for(WebElement element: listaPeliculas) {
+			String textoElemento = element.getText();
+			if(textoElemento.contains(movieName)) {
+				System.out.println("Ya encontre la pelicula " + movieName);
+				break;
+			}
+		}
 	}
 
 	protected void searchMovie(String movieName) {
@@ -45,7 +59,7 @@ public class ParentTest {
 		WebElement campoBusqueda = driver.findElement(By.name("q"));
 		campoBusqueda.sendKeys(movieName);
 		//encontrar el boton de busqueda id="navbar-submit-button
-		WebElement botonBusqueda = driver.findElement(By.id("navbar-submit-button"));
+		WebElement botonBusqueda = driver.findElement(By.cssSelector("#suggestion-search-button"));
 		botonBusqueda.click();
 	}
 	//Econtrar el campo busqueda
@@ -65,24 +79,45 @@ public class ParentTest {
 		
 	}
 
-	protected void validateCorrectMovie() {
+	protected void validateCorrectMovie(String nombre, String anio) {
 		// TODO Auto-generated method stub
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("#titleYear")));
+		System.out.println("Se encontro titulo "+ nombre);
 		
 	}
 
 	protected void selectMovie(String movieName, String movieYear) {
 		// encontramos un elemento cuyo link diga 'movieName' y cuyo anio coincida con movieYear
-		String xpathResultado = "//td[contains(., '" + movieName + " (" + movieYear+ ")')]/a";
-		WebElement peliculaCorrecta = driver.findElement(By.xpath(xpathResultado));
-		peliculaCorrecta.click();
+		  //String xpathResultado = "//td[contains(., '" + movieName + " (" + movieYear+ ")')]/a";
+		  //WebElement peliculaCorrecta = driver.findElement(By.xpath(xpathResultado));
+		  //peliculaCorrecta.click();
 
 		// TODO Auto-generated method stub
+		List<WebElement> listaPeliculas = driver.findElements(By.cssSelector("td.result_text"));
+		for(WebElement element: listaPeliculas) {
+			String textoElemento = element.getText();
+			if(textoElemento.contains(movieName) && textoElemento.contains(movieYear)) {
+				System.out.println("Ya encontre la pelicula " + movieName);
+				WebElement linkpelicula = element.findElement(By.cssSelector("a"));
+				linkpelicula.click();
+				break;
+			}
+		}
 		
 	}
 	
 	protected void validateMovieStars() {
 		// TODO Auto-generated method stub
 		
+	}
+	protected void createAcount() {
+		this.randomEmail= this.email + new Random().nextInt (1000000)+this.lomain;
+		sendText(email,this.randomEmail);
+		// TODO Auto-generated method stub
+
+	}
+
+	private void sendText(String email, String randomEmail) {
 	}
 
 
