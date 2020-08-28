@@ -21,7 +21,7 @@ public class ImdbSearchMovie extends ParentTest{
 		validateMovieExists(Datos.MOVIENAME);
 		selectMovie(Datos.MOVIENAME, Datos.MOVIEYEAR);
 		validateCorrectMovie(Datos.MOVIENAME, Datos.MOVIEYEAR);
-		playTrailer();
+		playTrailer(); // revisar en clase
 	}
 
 	@Test
@@ -32,7 +32,7 @@ public class ImdbSearchMovie extends ParentTest{
 		validateMovieExists(Datos.MOVIENAME);
 		selectMovie(Datos.MOVIENAME, Datos.MOVIEYEAR);
 		validateCorrectMovie(Datos.MOVIENAME, Datos.MOVIEYEAR);
-		validateMovieStars();
+		validateMovieStars(Datos.CAST); // revisar en clase
 	}
 
 	

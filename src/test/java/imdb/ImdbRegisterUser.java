@@ -2,9 +2,13 @@ package imdb;
 
 import org.junit.Test;
 
-public class ImdbRegisterUser {
+public class ImdbRegisterUser extends ParentTest{
     @Test
-    public void test1(){
-
+    public void testRegisterUser(){
+        navigateToPageNewRegister(Datos.URLNEWUSER);
+        validatePageNewRegister();
+        createAcount(); // revisar localizadores
+        validateProfile(Datos.USERNAME);
     }
 }
+
